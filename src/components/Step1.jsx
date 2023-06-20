@@ -88,19 +88,25 @@ const Step1 = () => {
             <ContentHeader contentTitle="Personal Info" contentDescription="Please provide your name, email address and phone number." />
             <Form className="form-container">
                 <Form.Group className="" controlId="name">
-                    <Form.Label>Name</Form.Label>
+                    <div className='label-box'>
+                        <Form.Label>Name</Form.Label>
+                        <p className='feedback'>{nameError}</p>
+                    </div>
                     <Form.Control onChange={handleChange} name="name" value={input.name} type="text" placeholder="" required />
-                    <p className='feedback'>{nameError}</p>
                 </Form.Group>
                 <Form.Group className="" controlId="email">
-                    <Form.Label>Email Adress</Form.Label>
+                    <div className='label-box'>
+                        <Form.Label>Email Adress</Form.Label>
+                        <p className='feedback'>{emailError}</p>
+                    </div>
                     <Form.Control onChange={handleChange} name="email" value={input.email} type="email" placeholder="" required />
-                    <p className='feedback'>{emailError}</p>
                 </Form.Group>
                 <Form.Group className="" controlId="phone">
-                    <Form.Label>Phone Number</Form.Label>
+                    <div className='label-box'>
+                        <Form.Label>Phone Number</Form.Label>
+                        <p className='feedback'>{phoneError}</p>
+                    </div>
                     <Form.Control onChange={handleChange} name="phone" value={input.phone} type="phone" placeholder="e.g. +1 234 567 890" required />
-                    <p className='feedback'>{phoneError}</p>
                 </Form.Group>
             </Form>
             <Button onClick={handleNextClick} className='next__btn'>
