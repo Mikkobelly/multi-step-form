@@ -18,15 +18,13 @@ html {
   background-color: hsl(217, 100%, 97%);
 }
 
-p {
-  margin-bottom: 0;
-}
-
 /* ----- Font / Typography ----- */
 .light-grey-text {
   color: hsl(231, 11%, 63%);
 }
 
+
+/* ----- Main content ---- */
 .container {
   width: 60%;
   height: 70%;
@@ -89,6 +87,7 @@ p {
   font-weight: 700;
 }
 
+/* ---- User Info Form ---- */
 .content-container .form-container {
   flex-grow: 1;
 }
@@ -101,7 +100,8 @@ p {
   margin-bottom: 10px;
 }
 
-.content-container form .btn {
+.content-container form .btn,
+.next__btn {
   display: inline-block;
   background-color: hsl(213, 96%, 18%);
   color: white;
@@ -118,6 +118,11 @@ p {
 .content-container form:hover,
 .content-container form .btn:hover {
   cursor: pointer;
+}
+
+.feedback {
+  color: rgb(207, 1, 1);
+  font-size: .8rem;
 }
 
 

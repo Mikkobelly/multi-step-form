@@ -1,78 +1,106 @@
-import React, { useState } from 'react'
-import { useNavigate, redirect } from "react-router-dom";
-import ContentHeader from './ContentHeader';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../App';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import ContentHeader from './ContentHeader';
+
 
 const Step1 = () => {
+    const { userData, setUserData } = useContext(AppContext);
     const [input, setInput] = useState({
-        name: "",
-        email: "",
-        phone: ""
-    })
+        name: userData.userInfo ? userData.userInfo.name : '',
+        email: userData.userInfo ? userData.userInfo.email : '',
+        phone: userData.userInfo ? userData.userInfo.phone : ''
+    });
+    const [nameError, setNameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
 
+    const navigate = useNavigate();
+
+
+    // Update the input state when user interacts
     const handleChange = (e) => {
         const { name, value } = e.target;
         setInput((prevValue) => {
             return { ...prevValue, [name]: value }
         })
+        name === 'name' && validateName(value);
+        name === 'email' && validateEmail(value);
+        name === 'phone' && validatePhone(value);
     }
 
-    const navigate = useNavigate();
-    const [validated, setValidated] = useState(false);
-
-    const handleSubmit = e => {
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
+    // Check for errors in name input
+    const validateName = (val) => {
+        setNameError('');
+        if (val === '') {
+            setNameError('This field is required');
         }
-        setValidated(true);
-        this.setState({ validated: true });
-        // navigate('/step2', { state: { name: input.name, email: input.email, phone: input.phone } });
-        return redirect('/step2')
+    }
+
+    // Check for errors in email input
+    const validateEmail = (val) => {
+        setEmailError('');
+        if (val === '') {
+            setEmailError('This field is required');
+        } else if ((val.indexOf('@') === -1
+            || val.indexOf('.') === -1)) {
+            setEmailError('Invalid email format')
+        }
+    }
+
+    // Check for errors in phone input
+    const validatePhone = (val) => {
+        setPhoneError('');
+        let pattern = /^[0-9,+]+$/;
+        if (val === '') {
+            setPhoneError('This field is required');
+        } else if (!val.match(pattern)) {
+            setPhoneError('Invalid format for phone number')
+        }
+    }
+
+    // Run when user press 'Next step' button and submits form data
+    const handleNextClick = () => {
+        validateName(input.name);
+        validateEmail(input.email);
+        validatePhone(input.phone);
+        if (nameError !== '' || emailError !== '' || phoneError !== '') {
+            alert('Please make change(s) to your input.')
+            return;
+        }
+        setUserData((prev) => {
+            return { ...prev, userInfo: { ...input } }
+        })
+        navigate('/step2')
     };
+
     return (
         <main className="content-container">
             <ContentHeader contentTitle="Personal Info" contentDescription="Please provide your name, email address and phone number." />
-            <Form className="form-container" noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form className="form-container">
                 <Form.Group className="" controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control onChange={handleChange} name="name" value={input.name} type="text" placeholder="" required />
-                    <Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
+                    <p className='feedback'>{nameError}</p>
                 </Form.Group>
                 <Form.Group className="" controlId="email">
                     <Form.Label>Email Adress</Form.Label>
                     <Form.Control onChange={handleChange} name="email" value={input.email} type="email" placeholder="" required />
-                    <Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
+                    <p className='feedback'>{emailError}</p>
                 </Form.Group>
-                <Form.Group className="" controlId="email">
+                <Form.Group className="" controlId="phone">
                     <Form.Label>Phone Number</Form.Label>
                     <Form.Control onChange={handleChange} name="phone" value={input.phone} type="phone" placeholder="e.g. +1 234 567 890" required />
-                    <Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
+                    <p className='feedback'>{phoneError}</p>
                 </Form.Group>
-
-                <Button type="submit">
-                    Next Step
-                </Button>
             </Form>
+            <Button onClick={handleNextClick} className='next__btn'>
+                Next Step
+            </Button>
         </main>
     )
 }
 
 export default Step1
-
-// <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-//                 <div>
-//                     <div>
-//                         <div className="invalid-feedback">This field is required.</div>
-//                         <label for="name">Name</label>
-//                         <input onChange={handleChange} id="name" type="text" name="name" value={input.name} placeholder="" className="form-control" required />
-//                     </div>
-//                     <label for="email">Email Adress</label>
-//                     <input onChange={handleChange} id="email" type="email" name="email" value={input.email} placeholder="" className="form-control" required />
-//                     <label for="phone">Phone Number</label>
-//                     <input onChange={handleChange} id="phone" type="text" name="phone" value={input.phone} placeholder="e.g. +1 234 567 890" className="form-control" required />
-//                 </div>
-//                 <button type="submit" className="btn">Next Step</button>
-//             </form>
