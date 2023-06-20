@@ -64,22 +64,10 @@ const Step3 = () => {
                 <div>
                     {addOns.map((item) => {
                         return <div key={item.id} className="check-box-container">
-                            <input onClick={handleCheck} type="checkbox" class="custom-control-input" id={item.id} />
-                            <label className="check-box-label" for="add-ons-1k"><div><p className="add-ons-title">{item.addOnsTitle}</p><p className="light-grey-text">{item.description}</p></div><p>{isSwitched ? item.monthlyPrice : item.yearlyPrice}</p></label>
+                            <input onClick={handleCheck} type="checkbox" className="custom-control-input" id={item.id} />
+                            <label className="check-box-label" htmlFor="add-ons-1k"><div><p className="add-ons-title">{item.addOnsTitle}</p><p className="light-grey-text">{item.description}</p></div><p>{isSwitched ? item.monthlyPrice : item.yearlyPrice}</p></label>
                         </div>
                     })}
-                    {/* <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-1" />
-                        <label className="check-box-label" for="add-ons-1k"><div><p className="add-ons-title">Online Services</p><p className="light-grey-text">Access to multiplayer games</p></div><p>{isSwitched ? "+$1/mo" : "+$10/yr"}</p></label>
-                    </div>
-                    <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-2" />
-                        <label className="check-box-label" for="add-ons-2"><div><p className="add-ons-title">Larger storage</p><p className="light-grey-text">Extra 1TB of cloud save</p></div><p>{isSwitched ? "+$2/mo" : "+$20/yr"}</p></label>
-                    </div>
-                    <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-3" />
-                        <label className="check-box-label" for="add-ons-3"><div><p className="add-ons-title">Customizable profile</p><p className="light-grey-text">Custom theme on your profile</p></div><p>{isSwitched ? "+$2/mo" : "+$20/yr"}</p></label>
-                    </div> */}
                 </div>
                 <div className="button-container">
                     <Link className="go-back-link light-grey-text" to={{ pathname: "/step2", state: isSwitched }}>Go Back</Link>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from '../App';
+import { Form, Button } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 import PlanCard from './PlanCard';
 import arcadeIcon from "../images/icon-arcade.svg";
@@ -10,7 +10,6 @@ import advancedIcon from "../images/icon-advanced.svg";
 
 const plans = [
     {
-        id: 1,
         planTitle: "Arcade",
         imgSrc: arcadeIcon,
         monthlyPrice: "$9/mo",
@@ -18,7 +17,6 @@ const plans = [
         benefit: "2 months free"
     },
     {
-        id: 2,
         planTitle: "advanced",
         imgSrc: advancedIcon,
         monthlyPrice: "$12/mo",
@@ -26,7 +24,6 @@ const plans = [
         benefit: "2 months free"
     },
     {
-        id: 3,
         planTitle: "Pro",
         imgSrc: proIcon,
         monthlyPrice: "$15/mo",
@@ -36,53 +33,80 @@ const plans = [
 ]
 
 const Step2 = () => {
-    let [isSwitched, setSwitch] = useState(true)
+    const navigate = useNavigate();
+    const { userData, setUserData } = useContext(AppContext);
+    const [plan, setPlan] = useState({
+        planTitle: userData.plan ? userData.plan.planTitle : '',
+        payment: userData.plan ? userData.plan.payment : 'monthly'
+    });
 
-    const location = useLocation();
-    if (location.state) {
-        isSwitched = location.state.isSwitched;
-    }
-
-    const handleSwitch = () => {
-        setSwitch((prevState) => {
-            // console.log(!prevState)
-            return !prevState;
+    // Run when user selects a plan (title)
+    const handlePlanSelect = (e) => {
+        const { id } = e.target;
+        setPlan((prev) => {
+            return { ...prev, planTitle: id };
         })
     }
 
-    const navigate = useNavigate();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate('/step3', { state: { isSwitched } });
+    // Run when user switches plans (monthly or yearly)
+    const handleSwitch = (e) => {
+        setPlan((prev) => {
+            return prev.payment === 'monthly' ? { ...prev, payment: 'yearly' } : { ...prev, payment: 'monthly' };
+        })
     }
+
+    // Run when user press 'Next step' button and updates userData state
+    const handleNextClick = () => {
+        // Run if user doesn't choose any plan
+        if (plan.planTitle === '') {
+            alert('Please choose a plan.');
+            return;
+        }
+
+        setUserData((prev) => {
+            // console.log('Next Step pressed: ', { ...prev, plan })
+            return { ...prev, plan }
+        })
+        navigate('/step3')
+    };
 
     return (
         <main className="content-container">
             <ContentHeader contentTitle="Select Your Plan" contentDescription="You have the option of monthly or yearly billing." />
-            <Form onSubmit={handleSubmit} className="form-container">
+            <Form className="form-container">
                 <div className="plancard-container">
                     {plans.map((item) => {
-                        return <PlanCard key={item.id} imgSrc={item.imgSrc} planTitle={item.planTitle} price={isSwitched ? item.monthlyPrice : item.yearlyPrice} benefit={!isSwitched && item.benefit} />
+                        return <PlanCard
+                            key={item.planTitle}
+                            id={item.planTitle}
+                            imgSrc={item.imgSrc}
+                            planTitle={item.planTitle}
+                            price={plan.payment === 'monthly' ? item.monthlyPrice : item.yearlyPrice}
+                            benefit={plan.payment === 'yearly' && item.benefit}
+                            handleClick={handlePlanSelect}
+                            selectedPlan={plan.planTitle}
+                        />
                     })}
-                    {/* <PlanCard imgSrc={arcadeIcon} planTitle="Arcade" price={isSwitched ? "$9/mo" : "$90/yr"} benefit={!isSwitched && "2 months free"} />
-                    <PlanCard imgSrc={advancedIcon} planTitle="Advanced" price={isSwitched ? "$12/mo" : "$120/yr"} benefit={!isSwitched && "2 months free"} />
-                    <PlanCard imgSrc={proIcon} planTitle="Pro" price={isSwitched ? "$15/mo" : "$150/yr"} benefit={!isSwitched && "2 months free"} /> */}
                 </div>
                 <div className="switch-container">
-                    <label for="plan-switch" className="switch-label">Monthly</label>
-                    <Form.Check onChange={handleSwitch} type="switch" id="plan-switch" />
-                    <label for="plan-switch" className="switch-label">Yearly</label>
-                </div>
-                <div className="button-container">
-                    <Link className="go-back-link light-grey-text" to="/">Go Back</Link>
-                    <Button type="submit">
-                        Next Step
-                    </Button>
+                    <label htmlFor="plan-switch" className="switch-label">Monthly</label>
+                    <Form.Check
+                        onChange={handleSwitch}
+                        type="switch"
+                        checked={plan.payment === 'yearly' ? true : false}
+                        id="plan-switch"
+                    />
+                    <label htmlFor="plan-switch" className="switch-label">Yearly</label>
                 </div>
             </Form>
+            <div className="button-container">
+                <Link className="go-back-link light-grey-text" to="/">Go Back</Link>
+                <Button onClick={handleNextClick} className='next__btn'>
+                    Next Step
+                </Button>
+            </div>
         </main>
     )
 }
 
 export default Step2
-export { plans }

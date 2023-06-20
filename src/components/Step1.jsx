@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 
 
@@ -36,7 +35,9 @@ const Step1 = () => {
         setNameError('');
         if (val === '') {
             setNameError('This field is required');
+            return false;
         }
+        return true;
     }
 
     // Check for errors in email input
@@ -44,10 +45,13 @@ const Step1 = () => {
         setEmailError('');
         if (val === '') {
             setEmailError('This field is required');
+            return false;
         } else if ((val.indexOf('@') === -1
             || val.indexOf('.') === -1)) {
             setEmailError('Invalid email format')
+            return false;
         }
+        return true;
     }
 
     // Check for errors in phone input
@@ -56,17 +60,20 @@ const Step1 = () => {
         let pattern = /^[0-9,+]+$/;
         if (val === '') {
             setPhoneError('This field is required');
+            return false;
         } else if (!val.match(pattern)) {
-            setPhoneError('Invalid format for phone number')
+            setPhoneError('Invalid format for phone number');
+            return false;
         }
+        return true;
     }
 
-    // Run when user press 'Next step' button and submits form data
+    // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
         validateName(input.name);
         validateEmail(input.email);
         validatePhone(input.phone);
-        if (nameError !== '' || emailError !== '' || phoneError !== '') {
+        if (!validateName(input.name) || !validateEmail(input.email) || !validatePhone(input.phone)) {
             alert('Please make change(s) to your input.')
             return;
         }
