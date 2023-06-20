@@ -12,22 +12,22 @@ const plans = [
     {
         planTitle: "Arcade",
         imgSrc: arcadeIcon,
-        monthlyPrice: "$9/mo",
-        yearlyPrice: "$90/yr",
+        monthlyPrice: 9,
+        yearlyPrice: 90,
         benefit: "2 months free"
     },
     {
         planTitle: "advanced",
         imgSrc: advancedIcon,
-        monthlyPrice: "$12/mo",
-        yearlyPrice: "$120/yr",
+        monthlyPrice: 12,
+        yearlyPrice: 120,
         benefit: "2 months free"
     },
     {
         planTitle: "Pro",
         imgSrc: proIcon,
-        monthlyPrice: "$15/mo",
-        yearlyPrice: "$150/yr",
+        monthlyPrice: 15,
+        yearlyPrice: 150,
         benefit: "2 months free"
     }
 ]
@@ -37,21 +37,30 @@ const Step2 = () => {
     const { userData, setUserData } = useContext(AppContext);
     const [plan, setPlan] = useState({
         planTitle: userData.plan ? userData.plan.planTitle : '',
-        payment: userData.plan ? userData.plan.payment : 'monthly'
+        paymentPlan: userData.plan ? userData.plan.paymentPlan : 'monthly',
+        price: userData.plan ? userData.plan.price : 0
     });
 
     // Run when user selects a plan (title)
     const handlePlanSelect = (e) => {
+        // Find which plan was selected from plans array
         const { id } = e.target;
+        const foundPlan = plans.find((item) => item.planTitle === id);
+
+        // Update selected planTitle and set price accordingly
         setPlan((prev) => {
-            return { ...prev, planTitle: id };
+            return { ...prev, planTitle: id, price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice };
         })
     }
 
     // Run when user switches plans (monthly or yearly)
     const handleSwitch = (e) => {
+        // Find currently selected plan from plans array
+        const foundPlan = plans.find((item) => item.planTitle === plan.planTitle)
+
+        // Update both paymentPlan and price based on it
         setPlan((prev) => {
-            return prev.payment === 'monthly' ? { ...prev, payment: 'yearly' } : { ...prev, payment: 'monthly' };
+            return prev.paymentPlan === 'monthly' ? { ...prev, paymentPlan: 'yearly', price: foundPlan.yearlyPrice } : { ...prev, paymentPlan: 'monthly', price: foundPlan.monthlyPrice };
         })
     }
 
@@ -64,9 +73,10 @@ const Step2 = () => {
         }
 
         setUserData((prev) => {
-            // console.log('Next Step pressed: ', { ...prev, plan })
+            console.log('Next Step pressed: ', { ...prev, plan })
             return { ...prev, plan }
         })
+
         navigate('/step3')
     };
 
@@ -81,8 +91,8 @@ const Step2 = () => {
                             id={item.planTitle}
                             imgSrc={item.imgSrc}
                             planTitle={item.planTitle}
-                            price={plan.payment === 'monthly' ? item.monthlyPrice : item.yearlyPrice}
-                            benefit={plan.payment === 'yearly' && item.benefit}
+                            price={plan.paymentPlan === 'monthly' ? `$${item.monthlyPrice}/mo` : `$${item.yearlyPrice}/yr`}
+                            benefit={plan.paymentPlan === 'yearly' && item.benefit}
                             handleClick={handlePlanSelect}
                             selectedPlan={plan.planTitle}
                         />
@@ -93,7 +103,7 @@ const Step2 = () => {
                     <Form.Check
                         onChange={handleSwitch}
                         type="switch"
-                        checked={plan.payment === 'yearly' ? true : false}
+                        checked={plan.paymentPlan === 'yearly' ? true : false}
                         id="plan-switch"
                     />
                     <label htmlFor="plan-switch" className="switch-label">Yearly</label>

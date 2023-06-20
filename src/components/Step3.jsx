@@ -1,77 +1,85 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Form';
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from '../App';
+import { Form, Button } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 
 const addOns = [
     {
-        id: 1,
         addOnsTitle: "Online Services",
         description: "Access to multiplayer games",
-        monthlyPrice: "+$1/mo",
-        yearlyPrice: "+$10/yr"
+        monthlyPrice: 1,
+        yearlyPrice: 10
     },
     {
-        id: 2,
         addOnsTitle: "Larger storage",
         description: "Extra 1TB of cloud save",
-        monthlyPrice: "+$2/mo",
-        yearlyPrice: "+$20/yr"
+        monthlyPrice: 2,
+        yearlyPrice: 20
     },
     {
-        id: 3,
         addOnsTitle: "Customizable profile",
         description: "Extra 1TB of cloud save",
-        monthlyPrice: "+$2/mo",
-        yearlyPrice: "+$20/yr"
+        monthlyPrice: 2,
+        yearlyPrice: 20
     }
 ]
 
 
 const Step3 = () => {
-    const location = useLocation();
-    let isSwitched = true;
-    if (location.state) {
-        isSwitched = location.state.isSwitched;
-    }
-
-    const [checked, setChecked] = useState(false);
-    const handleCheck = (e) => {
-        console.log(e.target.id)
-        setChecked((prevState) => {
-            return !prevState;
-        })
-    }
-
     const navigate = useNavigate();
-    const [checkedId, setCheckedId] = useState([]);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const { id } = e.target;
-        setCheckedId((prevValue) => {
-            const checkedIdArry = [...prevValue, id]
-            console.log(checkedIdArry)
-            return checkedIdArry;
-        })
-        navigate('/step4');
+    const { userData, setUserData } = useContext(AppContext);
+    const [selectedAddOns, setSelectedAddOns] = useState(userData.addOns ? userData.addOns : []);
+
+    // Run when user selects add-ons
+    const handleCheck = (e) => {
+        const { id, checked } = e.target;
+        const foundAddOn = addOns.find(item => item.addOnsTitle === id);
+        if (checked) {
+            setSelectedAddOns((prev) => {
+                return [...prev, foundAddOn]
+            })
+        } else {
+            setSelectedAddOns((prev) => {
+                const filtered = prev.filter(item => item.addOnsTitle !== id)
+                return filtered;
+            })
+        }
     }
+
+    // Run when user press 'Next step' button and updates userData state
+    const handleNextClick = () => {
+        setUserData((prev) => {
+            // console.log('Next Step pressed: ', { ...prev, addOns: selectedAddOns })
+            return { ...prev, addOns: selectedAddOns }
+        })
+
+        navigate('/step4')
+    };
+
 
     return (
         <main className="content-container">
             <ContentHeader contentTitle="Pick add-ons" contentDescription="Add-ons help your gaming experince." />
             <Form className="form-container">
                 <div>
-                    {addOns.map((item) => {
-                        return <div key={item.id} className="check-box-container">
-                            <input onClick={handleCheck} type="checkbox" className="custom-control-input" id={item.id} />
-                            <label className="check-box-label" htmlFor="add-ons-1k"><div><p className="add-ons-title">{item.addOnsTitle}</p><p className="light-grey-text">{item.description}</p></div><p>{isSwitched ? item.monthlyPrice : item.yearlyPrice}</p></label>
+                    {addOns.map((item) => (
+                        <div key={item.addOnsTitle} className="check-box-container">
+                            <input onClick={handleCheck} type="checkbox" className="custom-control-input" id={item.addOnsTitle} />
+                            <label className="check-box-label" htmlFor="add-ons-1k">
+                                <div>
+                                    <p className="add-ons-title">{item.addOnsTitle}</p>
+                                    <p className="light-grey-text">{item.description}</p>
+                                </div>
+                                <p>{userData.plan.paymentPlan && userData.plan.paymentPlan === 'yearly' ? `+$${item.yearlyPrice}/yr` : `+$${item.monthlyPrice}/mo`}</p>
+                            </label>
                         </div>
-                    })}
+                    )
+                    )}
                 </div>
                 <div className="button-container">
-                    <Link className="go-back-link light-grey-text" to={{ pathname: "/step2", state: isSwitched }}>Go Back</Link>
-                    <Button onClick={handleSubmit} className="btn" type="submit">Next Step</Button>
+                    <Link className="go-back-link light-grey-text" to={{ pathname: "/step2" }}>Go Back</Link>
+                    <Button onClick={handleNextClick} className='next__btn'>Next Step</Button>
                 </div>
             </Form>
         </main>
@@ -79,4 +87,3 @@ const Step3 = () => {
 }
 
 export default Step3
-export { addOns }
