@@ -36,9 +36,9 @@ const Step2 = () => {
     const navigate = useNavigate();
     const { userData, setUserData } = useContext(AppContext);
     const [plan, setPlan] = useState({
-        planTitle: userData.plan ? userData.plan.planTitle : '',
-        paymentPlan: userData.plan ? userData.plan.paymentPlan : 'monthly',
-        price: userData.plan ? userData.plan.price : 0
+        planTitle: userData.plan.planTitle,
+        paymentPlan: userData.plan.paymentPlan,
+        price: userData.plan.price
     });
 
     // Run when user selects a plan (title)
@@ -66,12 +66,6 @@ const Step2 = () => {
 
     // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
-        // Run if user doesn't choose any plan
-        if (plan.planTitle === '') {
-            alert('Please choose a plan.');
-            return;
-        }
-
         setUserData((prev) => {
             console.log('Next Step pressed: ', { ...prev, plan })
             return { ...prev, plan }
@@ -110,7 +104,7 @@ const Step2 = () => {
                 </div>
             </Form>
             <div className="button-container">
-                <Link className="go-back-link light-grey-text" to="/">Go Back</Link>
+                <Link className="go-back-link light-grey-text" to="/step1">Go Back</Link>
                 <Button onClick={handleNextClick} className='next__btn'>
                     Next Step
                 </Button>

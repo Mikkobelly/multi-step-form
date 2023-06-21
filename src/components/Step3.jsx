@@ -29,7 +29,7 @@ const addOns = [
 const Step3 = () => {
     const navigate = useNavigate();
     const { userData, setUserData } = useContext(AppContext);
-    const [selectedAddOns, setSelectedAddOns] = useState(userData.addOns ? userData.addOns : []);
+    const [selectedAddOns, setSelectedAddOns] = useState(userData.addOns);
 
     // Run when user selects add-ons
     const handleCheck = (e) => {
@@ -57,6 +57,11 @@ const Step3 = () => {
         navigate('/step4')
     };
 
+    // Find if the item is checked(selected)
+    const isChecked = (itemTitle) => {
+        return selectedAddOns.find((item) => item.addOnsTitle === itemTitle)
+    }
+
 
     return (
         <main className="content-container">
@@ -65,8 +70,14 @@ const Step3 = () => {
                 <div>
                     {addOns.map((item) => (
                         <div key={item.addOnsTitle} className="check-box-container">
-                            <input onClick={handleCheck} type="checkbox" className="custom-control-input" id={item.addOnsTitle} />
-                            <label className="check-box-label" htmlFor="add-ons-1k">
+                            <input
+                                onClick={handleCheck}
+                                type="checkbox"
+                                className="custom-control-input"
+                                id={item.addOnsTitle}
+                                defaultChecked={isChecked(item.addOnsTitle) ? true : false}
+                            />
+                            <label className="check-box-label" htmlFor={item.addOnsTitle}>
                                 <div>
                                     <p className="add-ons-title">{item.addOnsTitle}</p>
                                     <p className="light-grey-text">{item.description}</p>

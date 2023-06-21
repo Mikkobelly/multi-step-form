@@ -8,9 +8,9 @@ import ContentHeader from './ContentHeader';
 const Step1 = () => {
     const { userData, setUserData } = useContext(AppContext);
     const [input, setInput] = useState({
-        name: userData.userInfo ? userData.userInfo.name : '',
-        email: userData.userInfo ? userData.userInfo.email : '',
-        phone: userData.userInfo ? userData.userInfo.phone : ''
+        name: userData.userInfo.name,
+        email: userData.userInfo.email,
+        phone: userData.userInfo.phone
     });
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');

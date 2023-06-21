@@ -12,7 +12,21 @@ import Step5 from './components/Step5';
 export const AppContext = createContext();
 
 function App() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    userInfo: {
+      name: '',
+      email: '',
+      phone: ''
+    },
+    plan: {
+      planTitle: 'Arcade',
+      paymentPlan: 'monthly',
+      price: 9
+    },
+    addOns: []
+  });
+
+  console.log(userData)
   return (
     <Router>
       <div className="App">
@@ -21,7 +35,7 @@ function App() {
 
           <AppContext.Provider value={{ userData, setUserData }}>
             <Routes>
-              <Route path="/" element={<Step1 />} />
+              <Route path="/step1" element={<Step1 />} />
               <Route path="/step2" element={<Step2 />} />
               <Route path="/step3" element={<Step3 />} />
               <Route path="/step4" element={<Step4 />} />
