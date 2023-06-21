@@ -26,7 +26,7 @@ function App() {
     addOns: []
   });
 
-  console.log(userData)
+
   return (
     <Router>
       <div className="App">

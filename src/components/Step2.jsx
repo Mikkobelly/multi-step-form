@@ -51,6 +51,18 @@ const Step2 = () => {
         setPlan((prev) => {
             return { ...prev, planTitle: id, price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice };
         })
+
+        // Updates userData state as well
+        setUserData((prev) => {
+            return {
+                ...prev,
+                plan: {
+                    planTitle: id,
+                    paymentPlan: plan.paymentPlan,
+                    price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice
+                }
+            }
+        })
     }
 
     // Run when user switches plans (monthly or yearly)
@@ -62,14 +74,29 @@ const Step2 = () => {
         setPlan((prev) => {
             return prev.paymentPlan === 'monthly' ? { ...prev, paymentPlan: 'yearly', price: foundPlan.yearlyPrice } : { ...prev, paymentPlan: 'monthly', price: foundPlan.monthlyPrice };
         })
+
+        // Updates userData state as well
+        setUserData((prev) => {
+            return {
+                ...prev,
+                plan: prev.plan.paymentPlan === 'monthly' ? {
+                    planTitle: foundPlan.planTitle,
+                    paymentPlan: 'yearly',
+                    price: foundPlan.yearlyPrice
+                } : {
+                    planTitle: foundPlan.planTitle,
+                    paymentPlan: 'monthly',
+                    price: foundPlan.monthlyPrice
+                }
+            }
+        })
     }
 
     // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
-        setUserData((prev) => {
-            console.log('Next Step pressed: ', { ...prev, plan })
-            return { ...prev, plan }
-        })
+        // setUserData((prev) => {
+        //     return { ...prev, plan }
+        // })
 
         navigate('/step3')
     };

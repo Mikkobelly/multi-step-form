@@ -39,20 +39,29 @@ const Step3 = () => {
             setSelectedAddOns((prev) => {
                 return [...prev, foundAddOn]
             })
+
+            // Updates userData state as well
+            setUserData((prev) => {
+                return { ...prev, addOns: [...prev.addOns, foundAddOn] }
+            })
         } else {
             setSelectedAddOns((prev) => {
                 const filtered = prev.filter(item => item.addOnsTitle !== id)
                 return filtered;
+            })
+
+            setUserData((prev) => {
+                const filteredAddons = prev.addOns.filter(item => item.addOnsTitle !== id)
+                return { ...prev, addOns: filteredAddons };
             })
         }
     }
 
     // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
-        setUserData((prev) => {
-            // console.log('Next Step pressed: ', { ...prev, addOns: selectedAddOns })
-            return { ...prev, addOns: selectedAddOns }
-        })
+        // setUserData((prev) => {
+        //     return { ...prev, addOns: selectedAddOns }
+        // })
 
         navigate('/step4')
     };
@@ -62,6 +71,11 @@ const Step3 = () => {
         return selectedAddOns.find((item) => item.addOnsTitle === itemTitle)
     }
 
+    const clickedStyle = {
+        backgroundColor: "hsl(217, 100%, 97%)",
+        border: "2px solid black"
+    }
+
 
     return (
         <main className="content-container">
@@ -69,7 +83,7 @@ const Step3 = () => {
             <Form className="form-container">
                 <div>
                     {addOns.map((item) => (
-                        <div key={item.addOnsTitle} className="check-box-container">
+                        <div key={item.addOnsTitle} className="check-box-container" style={isChecked(item.addOnsTitle) ? clickedStyle : null}>
                             <input
                                 onClick={handleCheck}
                                 type="checkbox"

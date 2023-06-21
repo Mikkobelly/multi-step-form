@@ -233,7 +233,7 @@ form div.plancard-container {
 }
 
 .plan-container,
-.addons-container,
+.addon,
 .total-container {
   display: flex;
   justify-content: space-between;
