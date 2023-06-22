@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../App';
 
 const SummaryCard = () => {
-    const { userData, setUserData } = useContext(AppContext);
+    const { userData } = useContext(AppContext);
     const { plan, addOns } = userData;
 
     // Calculate total price of selected plan + optional add-ons
