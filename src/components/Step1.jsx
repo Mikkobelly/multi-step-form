@@ -10,11 +10,20 @@ import ContentHeader from './ContentHeader';
 const validateName = (val) => {
     let error = ''
     const nameFeedback = document.querySelector('.feedback--name');
-    if (nameFeedback) nameFeedback.textContent = error;
+    const nameInput = document.querySelector('.input--name');
+
+    // Remove feedback and red border
+    if (nameFeedback && nameInput) {
+        nameFeedback.textContent = error;
+        nameInput.classList.remove('red-border');
+    }
 
     if (val === '') {
         error = 'This field is required';
-        if (nameFeedback) nameFeedback.textContent = error;
+        if (nameFeedback && nameInput) {
+            nameFeedback.textContent = error;
+            nameInput.classList.add('red-border');
+        }
         return false;
     }
     return true;
@@ -24,16 +33,27 @@ const validateName = (val) => {
 const validateEmail = (val) => {
     let error = '';
     const emailFeedback = document.querySelector('.feedback--email');
-    if (emailFeedback) emailFeedback.textContent = error;
+    const emailInput = document.querySelector('.input--email');
+
+    if (emailFeedback && emailInput) {
+        emailFeedback.textContent = error;
+        emailInput.classList.remove('red-border');
+    }
 
     if (val === '') {
         error = 'This field is required';
-        if (emailFeedback) emailFeedback.textContent = error;
+        if (emailFeedback && emailInput) {
+            emailFeedback.textContent = error;
+            emailInput.classList.add('red-border');
+        }
         return false;
     } else if ((val.indexOf('@') === -1
         || val.indexOf('.') === -1)) {
         error = 'Invalid email format';
-        if (emailFeedback) emailFeedback.textContent = error;
+        if (emailFeedback && emailInput) {
+            emailFeedback.textContent = error;
+            emailInput.classList.add('red-border');
+        }
         return false;
     }
     return true;
@@ -43,16 +63,29 @@ const validateEmail = (val) => {
 const validatePhone = (val) => {
     let error = '';
     const phoneFeedback = document.querySelector('.feedback--phone');
-    if (phoneFeedback) phoneFeedback.textContent = error;
+    const phoneInput = document.querySelector('.input--phone');
+
+    if (phoneFeedback && phoneInput) {
+        phoneFeedback.textContent = error;
+        phoneInput.classList.remove('red-border');
+    }
+
+    // valid characters
     let pattern = /^[0-9,+]+$/;
 
     if (val === '') {
         error = 'This field is required';
-        if (phoneFeedback) phoneFeedback.textContent = error;
+        if (phoneFeedback && phoneInput) {
+            phoneFeedback.textContent = error;
+            phoneInput.classList.add('red-border');
+        }
         return false;
     } else if (!val.match(pattern)) {
         error = 'Invalid format for phone number';
-        if (phoneFeedback) phoneFeedback.textContent = error;
+        if (phoneFeedback && phoneInput) {
+            phoneFeedback.textContent = error;
+            phoneInput.classList.add('red-border');
+        }
         return false;
     }
     return true;
@@ -106,21 +139,21 @@ const Step1 = () => {
                         <Form.Label>Name</Form.Label>
                         <p className='feedback feedback--name'></p>
                     </div>
-                    <Form.Control onChange={handleChange} name="name" value={input.name} type="text" placeholder="" required />
+                    <Form.Control onChange={handleChange} className="input--name" name="name" value={input.name} type="text" placeholder="" required />
                 </Form.Group>
                 <Form.Group className="" controlId="email">
                     <div className='label-box'>
                         <Form.Label>Email Adress</Form.Label>
                         <p className='feedback feedback--email'></p>
                     </div>
-                    <Form.Control onChange={handleChange} name="email" value={input.email} type="email" placeholder="" required />
+                    <Form.Control onChange={handleChange} className='input--email' name="email" value={input.email} type="email" placeholder="" required />
                 </Form.Group>
                 <Form.Group className="" controlId="phone">
                     <div className='label-box'>
                         <Form.Label>Phone Number</Form.Label>
                         <p className='feedback feedback--phone'></p>
                     </div>
-                    <Form.Control onChange={handleChange} name="phone" value={input.phone} type="phone" placeholder="e.g. +1 234 567 890" required />
+                    <Form.Control onChange={handleChange} className="input--phone" name="phone" value={input.phone} type="phone" placeholder="e.g. +1 234 567 890" required />
                 </Form.Group>
             </Form>
             <Button onClick={handleNextClick} className='next__btn'>
