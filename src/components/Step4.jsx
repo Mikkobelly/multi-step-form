@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from '../App';
+import { validateName, validateEmail, validatePhone } from './Step1';
 import { Form, Button } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
-import SummaryCard from './SummaryCard'
+import SummaryCard from './SummaryCard';
 
 
 const Step4 = () => {
+    const { userData } = useContext(AppContext);
     const navigate = useNavigate();
+
     const handleSubmit = (e) => {
+        // Prevent reloading the page
         e.preventDefault();
+        const { name, email, phone } = userData.userInfo;
+
+        // Check if user has provided required info
+        if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
+            alert('Please provide personal info in Step 1. After filling the form, click "Next Step" to register your data.');
+            navigate('/step1')
+            return;
+        }
+
         navigate('/step5');
     }
     return (
