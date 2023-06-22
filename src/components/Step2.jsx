@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from '../App';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 import PlanCard from './PlanCard';
 import arcadeIcon from "../images/icon-arcade.svg";
@@ -33,7 +33,6 @@ const plans = [
 ]
 
 const Step2 = () => {
-    const navigate = useNavigate();
     const { userData, setUserData } = useContext(AppContext);
     const [plan, setPlan] = useState({
         planTitle: userData.plan.planTitle,
@@ -92,14 +91,6 @@ const Step2 = () => {
         })
     }
 
-    // Run when user press 'Next step' button and updates userData state
-    const handleNextClick = () => {
-        // setUserData((prev) => {
-        //     return { ...prev, plan }
-        // })
-
-        navigate('/step3')
-    };
 
     return (
         <main className="content-container">
@@ -132,9 +123,9 @@ const Step2 = () => {
             </Form>
             <div className="button-container">
                 <Link className="go-back-link light-grey-text" to="/step1">Go Back</Link>
-                <Button onClick={handleNextClick} className='next__btn'>
+                <Link to="/step3" className='next__btn'>
                     Next Step
-                </Button>
+                </Link>
             </div>
         </main>
     )

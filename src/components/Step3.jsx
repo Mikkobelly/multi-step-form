@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 
 const addOns = [
@@ -27,7 +27,6 @@ const addOns = [
 
 
 const Step3 = () => {
-    const navigate = useNavigate();
     const { userData, setUserData } = useContext(AppContext);
     const [selectedAddOns, setSelectedAddOns] = useState(userData.addOns);
 
@@ -57,14 +56,6 @@ const Step3 = () => {
         }
     }
 
-    // Run when user press 'Next step' button and updates userData state
-    const handleNextClick = () => {
-        // setUserData((prev) => {
-        //     return { ...prev, addOns: selectedAddOns }
-        // })
-
-        navigate('/step4')
-    };
 
     // Find if the item is checked(selected)
     const isChecked = (itemTitle) => {
@@ -102,11 +93,11 @@ const Step3 = () => {
                     )
                     )}
                 </div>
-                <div className="button-container">
-                    <Link className="go-back-link light-grey-text" to={{ pathname: "/step2" }}>Go Back</Link>
-                    <Button onClick={handleNextClick} className='next__btn'>Next Step</Button>
-                </div>
             </Form>
+            <div className="button-container">
+                <Link className="go-back-link light-grey-text" to="/step2">Go Back</Link>
+                <Link to="/step4" className='next__btn'>Next Step</Link>
+            </div>
         </main>
     )
 }

@@ -20,7 +20,7 @@ const Step4 = () => {
                     <SummaryCard />
                     <div className="button-container">
                         <Link className="go-back-link light-grey-text" to="/step3">Go Back</Link>
-                        <Button type="submit">
+                        <Button type="submit" className="confirm__btn">
                             Confirm
                         </Button>
                     </div>

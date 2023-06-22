@@ -27,6 +27,7 @@ html {
 /* ----- Main content ---- */
 .container {
   width: 60%;
+  min-height: 37rem;
   height: auto;
   display: grid;
   grid-template-columns: 30% 70%;
@@ -106,7 +107,7 @@ html {
   margin-bottom: 10px;
 }
 
-.content-container form .btn,
+.content-container form .confirm__btn,
 .next__btn {
   display: inline-block;
   background-color: hsl(213, 96%, 18%);
@@ -116,13 +117,25 @@ html {
   margin: auto 0 0 auto;
 }
 
-.content-container form .btn:hover {
+a.next__btn {
+  text-decoration: none;
+  border-radius: .375rem;
+  transition: all .15s ease-in-out;
+}
+
+a.next__btn:hover,
+a.next__btn:active {
+  color: white;
+  background-color: #0b5ed7;
+}
+
+.content-container form .confirm__btn:hover {
   background-color: hsl(213, 56%, 39%);
   color: white;
 }
 
 .content-container form:hover,
-.content-container form .btn:hover {
+.content-container form .confirm__btn:hover {
   cursor: pointer;
 }
 
