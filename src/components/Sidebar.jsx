@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const sidebarSource = [
     {
         num: 1,
-        path: '/step1',
+        path: '/',
         title: 'YOUR INFO'
     },
     {
