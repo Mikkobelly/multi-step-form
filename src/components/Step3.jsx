@@ -1,94 +1,117 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Form';
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../App';
+import { Form } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 
 const addOns = [
     {
-        id: 1,
-        addOnsTitle: "Online Services",
-        description: "Access to multiplayer games",
-        monthlyPrice: "+$1/mo",
-        yearlyPrice: "+$10/yr"
+        addOnsTitle: 'Online Services',
+        description: 'Access to multiplayer games',
+        monthlyPrice: 1,
+        yearlyPrice: 10
     },
     {
-        id: 2,
-        addOnsTitle: "Larger storage",
-        description: "Extra 1TB of cloud save",
-        monthlyPrice: "+$2/mo",
-        yearlyPrice: "+$20/yr"
+        addOnsTitle: 'Larger storage',
+        description: 'Extra 1TB of cloud save',
+        monthlyPrice: 2,
+        yearlyPrice: 20
     },
     {
-        id: 3,
-        addOnsTitle: "Customizable profile",
-        description: "Extra 1TB of cloud save",
-        monthlyPrice: "+$2/mo",
-        yearlyPrice: "+$20/yr"
+        addOnsTitle: 'Customizable profile',
+        description: 'Extra 1TB of cloud save',
+        monthlyPrice: 2,
+        yearlyPrice: 20
     }
-]
+];
 
 
 const Step3 = () => {
-    const location = useLocation();
-    let isSwitched = true;
-    if (location.state) {
-        isSwitched = location.state.isSwitched;
-    }
+    const { userData, setUserData } = useContext(AppContext);
+    const [selectedAddOns, setSelectedAddOns] = useState(userData.addOns);
 
-    const [checked, setChecked] = useState(false);
+    // Run when user selects add-ons
     const handleCheck = (e) => {
-        console.log(e.target.id)
-        setChecked((prevState) => {
-            return !prevState;
-        })
+        const { id, checked } = e.target;
+        const foundAddOn = addOns.find(item => item.addOnsTitle === id);
+        if (checked) {
+            setSelectedAddOns((prev) => {
+                return [...prev, foundAddOn]
+            })
+
+            // Updates userData state as well
+            setUserData((prev) => {
+                return { ...prev, addOns: [...prev.addOns, foundAddOn] }
+            })
+        } else {
+            setSelectedAddOns((prev) => {
+                const filtered = prev.filter(item => item.addOnsTitle !== id)
+                return filtered;
+            })
+
+            setUserData((prev) => {
+                const filteredAddons = prev.addOns.filter(item => item.addOnsTitle !== id)
+                return { ...prev, addOns: filteredAddons };
+            })
+        }
     }
 
-    const navigate = useNavigate();
-    const [checkedId, setCheckedId] = useState([]);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const { id } = e.target;
-        setCheckedId((prevValue) => {
-            const checkedIdArry = [...prevValue, id]
-            console.log(checkedIdArry)
-            return checkedIdArry;
-        })
-        navigate('/step4');
+    // Find if the item is checked(selected)
+    const isChecked = (itemTitle) => {
+        return selectedAddOns.find((item) => item.addOnsTitle === itemTitle)
     }
+
+    const clickedStyle = {
+        backgroundColor: 'hsl(231, 100%, 99%)',
+        border: '1px solid hsl(253, 77%, 61%)'
+    }
+
 
     return (
-        <main className="content-container">
-            <ContentHeader contentTitle="Pick add-ons" contentDescription="Add-ons help your gaming experince." />
-            <Form className="form-container">
+        <main className='content-container'>
+            <ContentHeader
+                contentTitle='Pick add-ons'
+                contentDescription='Add-ons help your gaming experince.'
+            />
+
+            <Form className='form-container'>
                 <div>
-                    {addOns.map((item) => {
-                        return <div key={item.id} className="check-box-container">
-                            <input onClick={handleCheck} type="checkbox" class="custom-control-input" id={item.id} />
-                            <label className="check-box-label" for="add-ons-1k"><div><p className="add-ons-title">{item.addOnsTitle}</p><p className="light-grey-text">{item.description}</p></div><p>{isSwitched ? item.monthlyPrice : item.yearlyPrice}</p></label>
+                    {addOns.map((item) => (
+                        <div
+                            key={item.addOnsTitle}
+                            className='checkbox-box'
+                            style={isChecked(item.addOnsTitle) ? clickedStyle : null}
+                        >
+                            <input
+                                onClick={handleCheck}
+                                type='checkbox'
+                                id={item.addOnsTitle}
+                                className='checkbox'
+                                defaultChecked={isChecked(item.addOnsTitle) ? true : false}
+                            />
+                            <label className='checkbox__label' htmlFor={item.addOnsTitle}>
+                                <div>
+                                    <p className='addon__title'>{item.addOnsTitle}</p>
+                                    <p className='addon__description light-gray-text'>{item.description}</p>
+                                </div>
+                                <p className='addon__price'>
+                                    {userData.plan.paymentPlan === 'yearly' ?
+                                        `+$${item.yearlyPrice}/yr` :
+                                        `+$${item.monthlyPrice}/mo`}
+                                </p>
+                            </label>
                         </div>
-                    })}
-                    {/* <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-1" />
-                        <label className="check-box-label" for="add-ons-1k"><div><p className="add-ons-title">Online Services</p><p className="light-grey-text">Access to multiplayer games</p></div><p>{isSwitched ? "+$1/mo" : "+$10/yr"}</p></label>
-                    </div>
-                    <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-2" />
-                        <label className="check-box-label" for="add-ons-2"><div><p className="add-ons-title">Larger storage</p><p className="light-grey-text">Extra 1TB of cloud save</p></div><p>{isSwitched ? "+$2/mo" : "+$20/yr"}</p></label>
-                    </div>
-                    <div className="check-box-container">
-                        <input type="checkbox" class="custom-control-input" id="add-ons-3" />
-                        <label className="check-box-label" for="add-ons-3"><div><p className="add-ons-title">Customizable profile</p><p className="light-grey-text">Custom theme on your profile</p></div><p>{isSwitched ? "+$2/mo" : "+$20/yr"}</p></label>
-                    </div> */}
-                </div>
-                <div className="button-container">
-                    <Link className="go-back-link light-grey-text" to={{ pathname: "/step2", state: isSwitched }}>Go Back</Link>
-                    <Button onClick={handleSubmit} className="btn" type="submit">Next Step</Button>
+                    )
+                    )}
                 </div>
             </Form>
+
+            <div className='button-box'>
+                <Link className='go-back light-gray-text' to='/step2'>Go Back</Link>
+                <Link to='/step4' className='next__btn'>Next Step</Link>
+            </div>
         </main>
     )
 }
 
-export default Step3
-export { addOns }
+export default Step3;

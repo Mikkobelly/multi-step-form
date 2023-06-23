@@ -1,88 +1,169 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../App';
+import { Form } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 import PlanCard from './PlanCard';
-import arcadeIcon from "../images/icon-arcade.svg";
-import proIcon from "../images/icon-pro.svg";
-import advancedIcon from "../images/icon-advanced.svg";
+import arcadeIcon from '../images/icon-arcade.svg';
+import proIcon from '../images/icon-pro.svg';
+import advancedIcon from '../images/icon-advanced.svg';
 
 const plans = [
     {
-        id: 1,
-        planTitle: "Arcade",
+        planTitle: 'Arcade',
         imgSrc: arcadeIcon,
-        monthlyPrice: "$9/mo",
-        yearlyPrice: "$90/yr",
-        benefit: "2 months free"
+        monthlyPrice: 9,
+        yearlyPrice: 90,
+        benefit: '2 months free'
     },
     {
-        id: 2,
-        planTitle: "advanced",
+        planTitle: 'Advanced',
         imgSrc: advancedIcon,
-        monthlyPrice: "$12/mo",
-        yearlyPrice: "$120/yr",
-        benefit: "2 months free"
+        monthlyPrice: 12,
+        yearlyPrice: 120,
+        benefit: '2 months free'
     },
     {
-        id: 3,
-        planTitle: "Pro",
+        planTitle: 'Pro',
         imgSrc: proIcon,
-        monthlyPrice: "$15/mo",
-        yearlyPrice: "$150/yr",
-        benefit: "2 months free"
+        monthlyPrice: 15,
+        yearlyPrice: 150,
+        benefit: '2 months free'
     }
-]
+];
+
 
 const Step2 = () => {
-    let [isSwitched, setSwitch] = useState(true)
+    const { userData, setUserData } = useContext(AppContext);
+    const [plan, setPlan] = useState({
+        planTitle: userData.plan.planTitle,
+        paymentPlan: userData.plan.paymentPlan,
+        price: userData.plan.price
+    });
 
-    const location = useLocation();
-    if (location.state) {
-        isSwitched = location.state.isSwitched;
-    }
 
-    const handleSwitch = () => {
-        setSwitch((prevState) => {
-            // console.log(!prevState)
-            return !prevState;
+    // Run when user selects a plan (title)
+    const handlePlanSelect = (e) => {
+        // Find which plan was selected from plans array
+        const { id } = e.target;
+        const foundPlan = plans.find((item) => item.planTitle === id);
+
+        // Update selected planTitle and set price accordingly
+        setPlan((prev) => {
+            return {
+                ...prev,
+                planTitle: id,
+                price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice
+            };
+        })
+
+        // Updates userData state as well
+        setUserData((prev) => {
+            return {
+                ...prev,
+                plan: {
+                    planTitle: id,
+                    paymentPlan: plan.paymentPlan,
+                    price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice
+                }
+            }
         })
     }
 
-    const navigate = useNavigate();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate('/step3', { state: { isSwitched } });
+    // Run when user switches plans (monthly or yearly)
+    const handleSwitch = () => {
+        // Find currently selected plan from plans array
+        const foundPlan = plans.find((item) => item.planTitle === plan.planTitle);
+
+        // Update both paymentPlan and price based on it
+        setPlan((prev) => {
+            return prev.paymentPlan === 'monthly' ? {
+                ...prev,
+                paymentPlan: 'yearly',
+                price: foundPlan.yearlyPrice
+            } : {
+                ...prev,
+                paymentPlan: 'monthly',
+                price: foundPlan.monthlyPrice
+            };
+        });
+
+        // Updates userData state as well
+        setUserData((prev) => {
+            return {
+                ...prev,
+                plan: prev.plan.paymentPlan === 'monthly' ? {
+                    planTitle: foundPlan.planTitle,
+                    paymentPlan: 'yearly',
+                    price: foundPlan.yearlyPrice
+                } : {
+                    planTitle: foundPlan.planTitle,
+                    paymentPlan: 'monthly',
+                    price: foundPlan.monthlyPrice
+                }
+            };
+        });
+    };
+
+    const switchLabelStyle = {
+        color: 'hsl(231, 11%, 63%)'
     }
 
+
     return (
-        <main className="content-container">
-            <ContentHeader contentTitle="Select Your Plan" contentDescription="You have the option of monthly or yearly billing." />
-            <Form onSubmit={handleSubmit} className="form-container">
-                <div className="plancard-container">
+        <main className='content-container'>
+            <ContentHeader
+                contentTitle='Select Your Plan'
+                contentDescription='You have the option of monthly or yearly billing.'
+            />
+
+            <Form className='form-container'>
+                <div className='plancard-box'>
                     {plans.map((item) => {
-                        return <PlanCard key={item.id} imgSrc={item.imgSrc} planTitle={item.planTitle} price={isSwitched ? item.monthlyPrice : item.yearlyPrice} benefit={!isSwitched && item.benefit} />
+                        return <PlanCard
+                            key={item.planTitle}
+                            id={item.planTitle}
+                            imgSrc={item.imgSrc}
+                            planTitle={item.planTitle}
+                            price={plan.paymentPlan === 'monthly' ? `$${item.monthlyPrice}/mo` : `$${item.yearlyPrice}/yr`}
+                            benefit={plan.paymentPlan === 'yearly' && item.benefit}
+                            handleClick={handlePlanSelect}
+                            selectedPlan={plan.planTitle}
+                        />
                     })}
-                    {/* <PlanCard imgSrc={arcadeIcon} planTitle="Arcade" price={isSwitched ? "$9/mo" : "$90/yr"} benefit={!isSwitched && "2 months free"} />
-                    <PlanCard imgSrc={advancedIcon} planTitle="Advanced" price={isSwitched ? "$12/mo" : "$120/yr"} benefit={!isSwitched && "2 months free"} />
-                    <PlanCard imgSrc={proIcon} planTitle="Pro" price={isSwitched ? "$15/mo" : "$150/yr"} benefit={!isSwitched && "2 months free"} /> */}
                 </div>
-                <div className="switch-container">
-                    <label for="plan-switch" className="switch-label">Monthly</label>
-                    <Form.Check onChange={handleSwitch} type="switch" id="plan-switch" />
-                    <label for="plan-switch" className="switch-label">Yearly</label>
-                </div>
-                <div className="button-container">
-                    <Link className="go-back-link light-grey-text" to="/">Go Back</Link>
-                    <Button type="submit">
-                        Next Step
-                    </Button>
+                <div className='switch-box'>
+                    <label
+                        htmlFor='plan-switch'
+                        className='switch__label switch__label--mo'
+                        style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
+                    >
+                        Monthly
+                    </label>
+                    <Form.Check
+                        onChange={handleSwitch}
+                        type='switch'
+                        checked={plan.paymentPlan === 'yearly' ? true : false}
+                        id='plan-switch'
+                    />
+                    <label
+                        htmlFor='plan-switch'
+                        className='switch__label switch__label--yr'
+                        style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
+                    >
+                        Yearly
+                    </label>
                 </div>
             </Form>
+
+            <div className='button-box'>
+                <Link className='go-back light-gray-text' to='/step1'>Go Back</Link>
+                <Link to='/step3' className='next__btn'>
+                    Next Step
+                </Link>
+            </div>
         </main>
     )
 }
 
-export default Step2
-export { plans }
+export default Step2;

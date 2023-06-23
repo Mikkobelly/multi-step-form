@@ -1,26 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 
 
-const PlanCard = (props) => {
-    const [isCardClicked, setCardClick] = useState(false)
-
-    const handleClick = () => {
-        setCardClick(prevState => !prevState)
-    }
-
+const PlanCard = ({ id, imgSrc, planTitle, price, benefit, handleClick, selectedPlan }) => {
     const clickedStyle = {
-        backgroundColor: "hsl(217, 100%, 97%)",
-        border: "2px solid black"
+        backgroundColor: 'hsl(231, 100%, 99%)',
+        border: '1px solid hsl(253, 77%, 61%)'
     }
 
     return (
-        <Card onClick={handleClick} style={isCardClicked ? clickedStyle : undefined}>
-            <Card.Img variant="top" src={props.imgSrc} className="plan-icon" />
-            <Card.Body>
-                <Card.Title>{props.planTitle}</Card.Title>
-                <Card.Text className="light-grey-text">{props.price}</Card.Text>
-                <Card.Text>{props.benefit}</Card.Text>
+        <Card onClick={handleClick} id={id} style={selectedPlan === planTitle ? clickedStyle : null}>
+            <Card.Img variant='top' src={imgSrc} className='plan__icon' id={id} />
+            <Card.Body id={id}>
+                <Card.Title id={id}>{planTitle}</Card.Title>
+                <Card.Text id={id} className='light-gray-text'>{price}</Card.Text>
+                <Card.Text id={id}>{benefit}</Card.Text>
             </Card.Body>
         </Card>
     )
