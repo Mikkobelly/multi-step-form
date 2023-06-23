@@ -1,36 +1,37 @@
 import React, { useContext, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
 import { Form } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 import PlanCard from './PlanCard';
-import arcadeIcon from "../images/icon-arcade.svg";
-import proIcon from "../images/icon-pro.svg";
-import advancedIcon from "../images/icon-advanced.svg";
+import arcadeIcon from '../images/icon-arcade.svg';
+import proIcon from '../images/icon-pro.svg';
+import advancedIcon from '../images/icon-advanced.svg';
 
 const plans = [
     {
-        planTitle: "Arcade",
+        planTitle: 'Arcade',
         imgSrc: arcadeIcon,
         monthlyPrice: 9,
         yearlyPrice: 90,
-        benefit: "2 months free"
+        benefit: '2 months free'
     },
     {
-        planTitle: "advanced",
+        planTitle: 'Advanced',
         imgSrc: advancedIcon,
         monthlyPrice: 12,
         yearlyPrice: 120,
-        benefit: "2 months free"
+        benefit: '2 months free'
     },
     {
-        planTitle: "Pro",
+        planTitle: 'Pro',
         imgSrc: proIcon,
         monthlyPrice: 15,
         yearlyPrice: 150,
-        benefit: "2 months free"
+        benefit: '2 months free'
     }
-]
+];
+
 
 const Step2 = () => {
     const { userData, setUserData } = useContext(AppContext);
@@ -40,6 +41,7 @@ const Step2 = () => {
         price: userData.plan.price
     });
 
+
     // Run when user selects a plan (title)
     const handlePlanSelect = (e) => {
         // Find which plan was selected from plans array
@@ -48,7 +50,11 @@ const Step2 = () => {
 
         // Update selected planTitle and set price accordingly
         setPlan((prev) => {
-            return { ...prev, planTitle: id, price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice };
+            return {
+                ...prev,
+                planTitle: id,
+                price: plan.paymentPlan === 'monthly' ? foundPlan.monthlyPrice : foundPlan.yearlyPrice
+            };
         })
 
         // Updates userData state as well
@@ -65,14 +71,22 @@ const Step2 = () => {
     }
 
     // Run when user switches plans (monthly or yearly)
-    const handleSwitch = (e) => {
+    const handleSwitch = () => {
         // Find currently selected plan from plans array
-        const foundPlan = plans.find((item) => item.planTitle === plan.planTitle)
+        const foundPlan = plans.find((item) => item.planTitle === plan.planTitle);
 
         // Update both paymentPlan and price based on it
         setPlan((prev) => {
-            return prev.paymentPlan === 'monthly' ? { ...prev, paymentPlan: 'yearly', price: foundPlan.yearlyPrice } : { ...prev, paymentPlan: 'monthly', price: foundPlan.monthlyPrice };
-        })
+            return prev.paymentPlan === 'monthly' ? {
+                ...prev,
+                paymentPlan: 'yearly',
+                price: foundPlan.yearlyPrice
+            } : {
+                ...prev,
+                paymentPlan: 'monthly',
+                price: foundPlan.monthlyPrice
+            };
+        });
 
         // Updates userData state as well
         setUserData((prev) => {
@@ -87,16 +101,24 @@ const Step2 = () => {
                     paymentPlan: 'monthly',
                     price: foundPlan.monthlyPrice
                 }
-            }
-        })
+            };
+        });
+    };
+
+    const switchLabelStyle = {
+        color: 'hsl(231, 11%, 63%)'
     }
 
 
     return (
-        <main className="content-container">
-            <ContentHeader contentTitle="Select Your Plan" contentDescription="You have the option of monthly or yearly billing." />
-            <Form className="form-container">
-                <div className="plancard-container">
+        <main className='content-container'>
+            <ContentHeader
+                contentTitle='Select Your Plan'
+                contentDescription='You have the option of monthly or yearly billing.'
+            />
+
+            <Form className='form-container'>
+                <div className='plancard-box'>
                     {plans.map((item) => {
                         return <PlanCard
                             key={item.planTitle}
@@ -110,20 +132,33 @@ const Step2 = () => {
                         />
                     })}
                 </div>
-                <div className="switch-container">
-                    <label htmlFor="plan-switch" className="switch-label">Monthly</label>
+                <div className='switch-box'>
+                    <label
+                        htmlFor='plan-switch'
+                        className='switch__label switch__label--mo'
+                        style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
+                    >
+                        Monthly
+                    </label>
                     <Form.Check
                         onChange={handleSwitch}
-                        type="switch"
+                        type='switch'
                         checked={plan.paymentPlan === 'yearly' ? true : false}
-                        id="plan-switch"
+                        id='plan-switch'
                     />
-                    <label htmlFor="plan-switch" className="switch-label">Yearly</label>
+                    <label
+                        htmlFor='plan-switch'
+                        className='switch__label switch__label--yr'
+                        style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
+                    >
+                        Yearly
+                    </label>
                 </div>
             </Form>
-            <div className="button-container">
-                <Link className="go-back-link light-grey-text" to="/step1">Go Back</Link>
-                <Link to="/step3" className='next__btn'>
+
+            <div className='button-box'>
+                <Link className='go-back light-gray-text' to='/step1'>Go Back</Link>
+                <Link to='/step3' className='next__btn'>
                     Next Step
                 </Link>
             </div>
@@ -131,4 +166,4 @@ const Step2 = () => {
     )
 }
 
-export default Step2
+export default Step2;

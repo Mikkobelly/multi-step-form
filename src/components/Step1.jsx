@@ -4,8 +4,7 @@ import { AppContext } from '../App';
 import { Form, Button } from 'react-bootstrap';
 import ContentHeader from './ContentHeader';
 
-
-// These are defined globally so that they can be used in other component
+// These functions are defined globally so that they can be used in other component
 // Check for errors in name input
 const validateName = (val) => {
     let error = ''
@@ -26,6 +25,7 @@ const validateName = (val) => {
         }
         return false;
     }
+
     return true;
 }
 
@@ -56,6 +56,7 @@ const validateEmail = (val) => {
         }
         return false;
     }
+
     return true;
 }
 
@@ -88,6 +89,7 @@ const validatePhone = (val) => {
         }
         return false;
     }
+
     return true;
 }
 
@@ -112,7 +114,7 @@ const Step1 = () => {
         name === 'name' && validateName(value);
         name === 'email' && validateEmail(value);
         name === 'phone' && validatePhone(value);
-    }
+    };
 
     // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
@@ -131,31 +133,60 @@ const Step1 = () => {
 
 
     return (
-        <main className="content-container">
-            <ContentHeader contentTitle="Personal Info" contentDescription="Please provide your name, email address and phone number." />
-            <Form className="form-container">
-                <Form.Group className="" controlId="name">
+        <main className='content-container'>
+            <ContentHeader
+                contentTitle='Personal Info'
+                contentDescription='Please provide your name, email address and phone number.'
+            />
+
+            <Form className='form-container'>
+                <Form.Group controlId='name'>
                     <div className='label-box'>
                         <Form.Label>Name</Form.Label>
                         <p className='feedback feedback--name'></p>
                     </div>
-                    <Form.Control onChange={handleChange} className="input--name" name="name" value={input.name} type="text" placeholder="" required />
+                    <Form.Control
+                        className='input--name'
+                        onChange={handleChange}
+                        name='name'
+                        value={input.name}
+                        type='text'
+                        placeholder='e.g.Stephen King'
+                        required
+                    />
                 </Form.Group>
-                <Form.Group className="" controlId="email">
+                <Form.Group controlId='email'>
                     <div className='label-box'>
                         <Form.Label>Email Adress</Form.Label>
                         <p className='feedback feedback--email'></p>
                     </div>
-                    <Form.Control onChange={handleChange} className='input--email' name="email" value={input.email} type="email" placeholder="" required />
+                    <Form.Control
+                        className='input--email'
+                        onChange={handleChange}
+                        name='email'
+                        value={input.email}
+                        type='email'
+                        placeholder='e.g.stephenking@lorem.com'
+                        required
+                    />
                 </Form.Group>
-                <Form.Group className="" controlId="phone">
+                <Form.Group controlId='phone'>
                     <div className='label-box'>
                         <Form.Label>Phone Number</Form.Label>
                         <p className='feedback feedback--phone'></p>
                     </div>
-                    <Form.Control onChange={handleChange} className="input--phone" name="phone" value={input.phone} type="phone" placeholder="e.g. +1 234 567 890" required />
+                    <Form.Control
+                        className='input--phone'
+                        onChange={handleChange}
+                        name='phone'
+                        value={input.phone}
+                        type='phone'
+                        placeholder='e.g. +1 234 567 890'
+                        required
+                    />
                 </Form.Group>
             </Form>
+
             <Button onClick={handleNextClick} className='next__btn'>
                 Next Step
             </Button>
@@ -163,5 +194,5 @@ const Step1 = () => {
     )
 }
 
-export default Step1
-export { validateName, validateEmail, validatePhone }
+export default Step1;
+export { validateName, validateEmail, validatePhone };

@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 const ContentHeader = (props) => {
     return (
-        <div className="content-header">
-            <h1></h1>
-            <h3 className="content-title">{props.contentTitle}</h3>
-            <p className="light-grey-text">{props.contentDescription}</p>
+        <div className='content__header'>
+            <h1>{props.contentTitle}</h1>
+            <p className='light-gray-text'>{props.contentDescription}</p>
         </div>
     )
 }
 
-export default ContentHeader
+export default ContentHeader;
