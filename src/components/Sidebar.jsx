@@ -1,40 +1,52 @@
-import React from "react";
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const sidebarSource = [
     {
         num: 1,
-        path: "/",
-        title: "YOUR INFO"
+        path: '/step1',
+        title: 'YOUR INFO'
     },
     {
         num: 2,
-        path: "/step2",
-        title: "SELECT PLAN"
+        path: '/step2',
+        title: 'SELECT PLAN'
     },
     {
         num: 3,
-        path: "/step3",
-        title: "ADD-ONS"
+        path: '/step3',
+        title: 'ADD-ONS'
     },
     {
         num: 4,
-        path: "/step4",
-        title: "SUMMARY"
+        path: '/step4',
+        title: 'SUMMARY'
     }
 ]
 
-const Sidebar = (props) => {
+
+const Sidebar = () => {
     let activeStyle = {
-        backgroundColor: "hsl(228, 100%, 84%)",
-        color: "hsl(243, 100%, 62%)"
+        backgroundColor: 'hsl(206, 94%, 87%)',
+        color: 'hsl(243, 100%, 62%)'
     };
 
-    return <div className="sidebar-container">
+    return <div className='sidebar-container'>
         {sidebarSource.map((item) => {
-            return <div key={item.num} className="sidebar-content-container">
-                <div><NavLink to={item.path} className="sidebar-step" style={({ isActive }) => isActive ? activeStyle : undefined}>{item.num}</NavLink></div>
-                <div><p className="light-grey-text">step {item.num}</p><p className="sidebar-title">{item.title}</p></div>
+            return <div key={item.num} className='sidebar__content-box'>
+                <div>
+                    <NavLink
+                        to={item.path}
+                        className='sidebar__num'
+                        style={({ isActive }) => isActive ? activeStyle : undefined}
+                    >
+                        {item.num}
+                    </NavLink>
+                </div>
+                <div>
+                    <p className='sidebar__step light-gray-text'>step {item.num}</p>
+                    <p className='sidebar__title'>{item.title}</p>
+                </div>
             </div>
         })}
     </div>
