@@ -21,7 +21,7 @@ const Step4 = () => {
         if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
             alert('Please provide personal info in Step 1. After filling the form, click "Next Step" to register your data.');
             // Redirect user to step1
-            navigate('/step1')
+            navigate('/')
             return;
         }
 
@@ -35,6 +35,7 @@ const Step4 = () => {
                 <ContentHeader
                     contentTitle='Finishing up'
                     contentDescription='Double-check everything looks OK before confirming.'
+
                 />
 
                 <Form onSubmit={handleSubmit} className='form-container summary'>

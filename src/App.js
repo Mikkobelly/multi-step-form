@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createContext, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Step1 from './components/Step1';
@@ -28,13 +28,13 @@ const App = () => {
 
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className='container'>
         <Sidebar />
 
         <AppContext.Provider value={{ userData, setUserData }}>
           <Routes>
-            <Route path='/step1' element={<Step1 />} />
+            <Route path='/' element={<Step1 />} />
             <Route path='/step2' element={<Step2 />} />
             <Route path='/step3' element={<Step3 />} />
             <Route path='/step4' element={<Step4 />} />
@@ -42,7 +42,7 @@ const App = () => {
           </Routes>
         </AppContext.Provider>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
