@@ -135,7 +135,7 @@ const Step2 = () => {
                 <div className='switch-box'>
                     <label
                         htmlFor='plan-switch'
-                        className='switch__label switch__label--mo'
+                        className='switch__label'
                         style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
                     >
                         Monthly
@@ -148,7 +148,7 @@ const Step2 = () => {
                     />
                     <label
                         htmlFor='plan-switch'
-                        className='switch__label switch__label--yr'
+                        className='switch__label'
                         style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
                     >
                         Yearly
