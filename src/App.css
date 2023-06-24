@@ -71,6 +71,7 @@ h1 {
   grid-template-columns: 30% 70%;
   background-color: var(--white);
   padding: 1%;
+  margin: 2.5%;
 }
 
 .sidebar-container {
@@ -125,8 +126,12 @@ h1 {
   height: 100%;
 }
 
-.form-container {
+/* .form-container {
   flex-grow: 1;
+} */
+
+.flex-container {
+  flex: 1;
 }
 
 .content__header {
@@ -181,6 +186,16 @@ h1 {
   border: 1px solid var(--purple);
 }
 
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-box.next__btn-box {
+  justify-content: flex-end;
+}
+
 .confirm__btn,
 .next__btn {
   display: inline-block;
@@ -189,24 +204,11 @@ h1 {
   color: var(--white);
   border: none;
   border-radius: .75rem;
-  margin: auto 0 0 auto;
   transition: var(--transition);
 }
 
 .next__btn {
   padding: 1.3rem 2.6rem;
-}
-
-a.next__btn {
-  text-decoration: none;
-  border-radius: .75rem;
-  padding: 1.3rem 2.6rem;
-}
-
-a.next__btn:hover,
-a.next__btn:active {
-  color: var(--white);
-  background-color: #0b5ed7;
 }
 
 .feedback {
@@ -295,10 +297,16 @@ a.next__btn:active {
   padding: 1.6rem 0;
 }
 
-.button-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+a.next__btn {
+  text-decoration: none;
+  border-radius: .75rem;
+  padding: 1.3rem 2.6rem;
+}
+
+a.next__btn:hover,
+a.next__btn:active {
+  color: var(--white);
+  background-color: #0b5ed7;
 }
 
 
@@ -354,7 +362,7 @@ a.next__btn:active {
 
 
 /* ----- Step4 / SummaryCard ----- */
-.form-container.summary {
+.summary {
   justify-content: space-between;
 }
 
@@ -428,7 +436,7 @@ a.next__btn:active {
   color: var(--white);
 }
 
-/* ------ Step5 ----- */
+/* ------ Complete page ----- */
 .thank-container {
   justify-content: center;
 }
@@ -449,3 +457,84 @@ a.next__btn:active {
   color: var(--cool-gray);
 }
 
+/* 750px */
+@media all and (max-width: 46.875em) { 
+
+  .sidebar__title {
+    font-size: 1.3rem;
+  }
+
+  .sidebar__step {
+    font-size: 1.15rem;
+  }
+
+}
+
+@media all and (max-width: 41.875em) {
+
+    h1 {
+      font-size: 2.8rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 3%;
+      margin: 0;
+      background-color: var(--magnolia);
+      border-radius: 0;
+      overflow: hidden;
+    }
+
+    .sidebar-container {
+      background-image: url("images/bg-sidebar-mobile.svg");
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      transform: scale(1.2);
+      height: 24vh;
+    }
+
+    .sidebar__content-box {
+      justify-content: center;
+      align-items: flex-start;
+      transform: scale(.8);
+    }
+
+    .sidebar__title,
+    .sidebar__step {
+      display: none;
+    }
+
+    .sidebar__num {
+      margin: 0 .4rem;
+    }
+
+    .content-container {
+      min-height: 50rem;
+      padding: 8% 5%;
+      transform: translateY(-16%);
+      background-color: var(--white);
+      border-radius: 1.2rem;
+    }
+
+    .button-box {
+      width: 100%;
+      background-color: var(--white);
+    }
+
+    /* Step2 */
+    .plancard-box {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 20% 1fr;
+    }
+
+    .plan__icon {
+      margin-bottom: 0;
+    }
+}

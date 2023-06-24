@@ -134,62 +134,66 @@ const Step1 = () => {
 
     return (
         <main className='content-container'>
-            <ContentHeader
-                contentTitle='Personal Info'
-                contentDescription='Please provide your name, email address and phone number.'
-            />
+            <div className='flex-container'>
+                <ContentHeader
+                    contentTitle='Personal Info'
+                    contentDescription='Please provide your name, email address and phone number.'
+                />
 
-            <Form className='form-container'>
-                <Form.Group controlId='name'>
-                    <div className='label-box'>
-                        <Form.Label>Name</Form.Label>
-                        <p className='feedback feedback--name'></p>
-                    </div>
-                    <Form.Control
-                        className='input--name'
-                        onChange={handleChange}
-                        name='name'
-                        value={input.name}
-                        type='text'
-                        placeholder='e.g.Stephen King'
-                        required
-                    />
-                </Form.Group>
-                <Form.Group controlId='email'>
-                    <div className='label-box'>
-                        <Form.Label>Email Adress</Form.Label>
-                        <p className='feedback feedback--email'></p>
-                    </div>
-                    <Form.Control
-                        className='input--email'
-                        onChange={handleChange}
-                        name='email'
-                        value={input.email}
-                        type='email'
-                        placeholder='e.g.stephenking@lorem.com'
-                        required
-                    />
-                </Form.Group>
-                <Form.Group controlId='phone'>
-                    <div className='label-box'>
-                        <Form.Label>Phone Number</Form.Label>
-                        <p className='feedback feedback--phone'></p>
-                    </div>
-                    <Form.Control
-                        className='input--phone'
-                        onChange={handleChange}
-                        name='phone'
-                        value={input.phone}
-                        type='phone'
-                        placeholder='e.g. +1 234 567 890'
-                        required
-                    />
-                </Form.Group>
-            </Form>
+                <Form className='form-container'>
+                    <Form.Group controlId='name'>
+                        <div className='label-box'>
+                            <Form.Label>Name</Form.Label>
+                            <p className='feedback feedback--name'></p>
+                        </div>
+                        <Form.Control
+                            className='input--name'
+                            onChange={handleChange}
+                            name='name'
+                            value={input.name}
+                            type='text'
+                            placeholder='e.g.Stephen King'
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group controlId='email'>
+                        <div className='label-box'>
+                            <Form.Label>Email Adress</Form.Label>
+                            <p className='feedback feedback--email'></p>
+                        </div>
+                        <Form.Control
+                            className='input--email'
+                            onChange={handleChange}
+                            name='email'
+                            value={input.email}
+                            type='email'
+                            placeholder='e.g.stephenking@lorem.com'
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group controlId='phone'>
+                        <div className='label-box'>
+                            <Form.Label>Phone Number</Form.Label>
+                            <p className='feedback feedback--phone'></p>
+                        </div>
+                        <Form.Control
+                            className='input--phone'
+                            onChange={handleChange}
+                            name='phone'
+                            value={input.phone}
+                            type='phone'
+                            placeholder='e.g. +1 234 567 890'
+                            required
+                        />
+                    </Form.Group>
+                </Form>
+            </div>
 
-            <Button onClick={handleNextClick} className='next__btn'>
-                Next Step
-            </Button>
+            <div className='button-box next__btn-box'>
+                <Button onClick={handleNextClick} className='next__btn'>
+                    Next Step
+                </Button>
+            </div>
         </main>
     )
 }

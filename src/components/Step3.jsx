@@ -69,42 +69,44 @@ const Step3 = () => {
 
     return (
         <main className='content-container'>
-            <ContentHeader
-                contentTitle='Pick add-ons'
-                contentDescription='Add-ons help your gaming experince.'
-            />
+            <div className='flex-container'>
+                <ContentHeader
+                    contentTitle='Pick add-ons'
+                    contentDescription='Add-ons help your gaming experince.'
+                />
 
-            <Form className='form-container'>
-                <div>
-                    {addOns.map((item) => (
-                        <div
-                            key={item.addOnsTitle}
-                            className='checkbox-box'
-                            style={isChecked(item.addOnsTitle) ? clickedStyle : null}
-                        >
-                            <input
-                                onClick={handleCheck}
-                                type='checkbox'
-                                id={item.addOnsTitle}
-                                className='checkbox'
-                                defaultChecked={isChecked(item.addOnsTitle) ? true : false}
-                            />
-                            <label className='checkbox__label' htmlFor={item.addOnsTitle}>
-                                <div>
-                                    <p className='addon__title'>{item.addOnsTitle}</p>
-                                    <p className='addon__description light-gray-text'>{item.description}</p>
-                                </div>
-                                <p className='addon__price'>
-                                    {userData.plan.paymentPlan === 'yearly' ?
-                                        `+$${item.yearlyPrice}/yr` :
-                                        `+$${item.monthlyPrice}/mo`}
-                                </p>
-                            </label>
-                        </div>
-                    )
-                    )}
-                </div>
-            </Form>
+                <Form className='form-container'>
+                    <div>
+                        {addOns.map((item) => (
+                            <div
+                                key={item.addOnsTitle}
+                                className='checkbox-box'
+                                style={isChecked(item.addOnsTitle) ? clickedStyle : null}
+                            >
+                                <input
+                                    onClick={handleCheck}
+                                    type='checkbox'
+                                    id={item.addOnsTitle}
+                                    className='checkbox'
+                                    defaultChecked={isChecked(item.addOnsTitle) ? true : false}
+                                />
+                                <label className='checkbox__label' htmlFor={item.addOnsTitle}>
+                                    <div>
+                                        <p className='addon__title'>{item.addOnsTitle}</p>
+                                        <p className='addon__description light-gray-text'>{item.description}</p>
+                                    </div>
+                                    <p className='addon__price'>
+                                        {userData.plan.paymentPlan === 'yearly' ?
+                                            `+$${item.yearlyPrice}/yr` :
+                                            `+$${item.monthlyPrice}/mo`}
+                                    </p>
+                                </label>
+                            </div>
+                        )
+                        )}
+                    </div>
+                </Form>
+            </div>
 
             <div className='button-box'>
                 <Link className='go-back light-gray-text' to='/step2'>Go Back</Link>
