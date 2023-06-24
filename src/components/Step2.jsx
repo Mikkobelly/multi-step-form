@@ -112,49 +112,51 @@ const Step2 = () => {
 
     return (
         <main className='content-container'>
-            <ContentHeader
-                contentTitle='Select Your Plan'
-                contentDescription='You have the option of monthly or yearly billing.'
-            />
+            <div className='flex-container'>
+                <ContentHeader
+                    contentTitle='Select Your Plan'
+                    contentDescription='You have the option of monthly or yearly billing.'
+                />
 
-            <Form className='form-container'>
-                <div className='plancard-box'>
-                    {plans.map((item) => {
-                        return <PlanCard
-                            key={item.planTitle}
-                            id={item.planTitle}
-                            imgSrc={item.imgSrc}
-                            planTitle={item.planTitle}
-                            price={plan.paymentPlan === 'monthly' ? `$${item.monthlyPrice}/mo` : `$${item.yearlyPrice}/yr`}
-                            benefit={plan.paymentPlan === 'yearly' && item.benefit}
-                            handleClick={handlePlanSelect}
-                            selectedPlan={plan.planTitle}
+                <Form className='form-container'>
+                    <div className='plancard-box'>
+                        {plans.map((item) => {
+                            return <PlanCard
+                                key={item.planTitle}
+                                id={item.planTitle}
+                                imgSrc={item.imgSrc}
+                                planTitle={item.planTitle}
+                                price={plan.paymentPlan === 'monthly' ? `$${item.monthlyPrice}/mo` : `$${item.yearlyPrice}/yr`}
+                                benefit={plan.paymentPlan === 'yearly' && item.benefit}
+                                handleClick={handlePlanSelect}
+                                selectedPlan={plan.planTitle}
+                            />
+                        })}
+                    </div>
+                    <div className='switch-box'>
+                        <label
+                            htmlFor='plan-switch'
+                            className='switch__label switch__label--mo'
+                            style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
+                        >
+                            Monthly
+                        </label>
+                        <Form.Check
+                            onChange={handleSwitch}
+                            type='switch'
+                            checked={plan.paymentPlan === 'yearly' ? true : false}
+                            id='plan-switch'
                         />
-                    })}
-                </div>
-                <div className='switch-box'>
-                    <label
-                        htmlFor='plan-switch'
-                        className='switch__label switch__label--mo'
-                        style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
-                    >
-                        Monthly
-                    </label>
-                    <Form.Check
-                        onChange={handleSwitch}
-                        type='switch'
-                        checked={plan.paymentPlan === 'yearly' ? true : false}
-                        id='plan-switch'
-                    />
-                    <label
-                        htmlFor='plan-switch'
-                        className='switch__label switch__label--yr'
-                        style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
-                    >
-                        Yearly
-                    </label>
-                </div>
-            </Form>
+                        <label
+                            htmlFor='plan-switch'
+                            className='switch__label switch__label--yr'
+                            style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
+                        >
+                            Yearly
+                        </label>
+                    </div>
+                </Form>
+            </div>
 
             <div className='button-box'>
                 <Link className='go-back light-gray-text' to='/step1'>Go Back</Link>

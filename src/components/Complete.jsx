@@ -1,7 +1,7 @@
 import React from 'react';
 import thankYouIcon from '../images/icon-thank-you.svg';
 
-const Step5 = () => {
+const Complete = () => {
     return (
         <main className='content-container thank-container'>
             <img src={thankYouIcon} className='thank__icon' alt='icon'></img>
@@ -15,4 +15,4 @@ const Step5 = () => {
     )
 }
 
-export default Step5;
+export default Complete;

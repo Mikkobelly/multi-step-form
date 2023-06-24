@@ -8,7 +8,7 @@ import SummaryCard from './SummaryCard';
 
 
 const Step4 = () => {
-    const { userData } = useContext(AppContext);
+    const { userData, setUserData } = useContext(AppContext);
     const navigate = useNavigate();
 
     // Run when user presses 'confirm' button
@@ -25,20 +25,39 @@ const Step4 = () => {
             return;
         }
 
-        navigate('/step5');
+        // POST USER DATA TO THE SERVER HERE
+
+        // Reset user data
+        setUserData({
+            userInfo: {
+                name: '',
+                email: '',
+                phone: ''
+            },
+            plan: {
+                planTitle: 'Arcade',
+                paymentPlan: 'monthly',
+                price: 9
+            },
+            addOns: []
+        });
+
+        navigate('/complete');
     }
 
 
     return (
         <div>
             <main className='content-container'>
-                <ContentHeader
-                    contentTitle='Finishing up'
-                    contentDescription='Double-check everything looks OK before confirming.'
-                />
-
-                <Form onSubmit={handleSubmit} className='form-container summary'>
+                <div className='flex-container'>
+                    <ContentHeader
+                        contentTitle='Finishing up'
+                        contentDescription='Double-check everything looks OK before confirming.'
+                    />
                     <SummaryCard />
+                </div>
+
+                <Form onSubmit={handleSubmit} className='summary'>
                     <div className='button-box'>
                         <Link className='go-back light-gray-text' to='/step3'>Go Back</Link>
                         <Button type='submit' className='confirm__btn'>
