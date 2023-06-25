@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
 import { Form } from 'react-bootstrap';
+import Sidebar from './Sidebar';
 import ContentHeader from './ContentHeader';
 
 const addOns = [
@@ -68,8 +69,10 @@ const Step3 = () => {
 
 
     return (
-        <main className='content-container'>
-            <div className='flex-container'>
+        <div className='container'>
+            <Sidebar />
+
+            <main className='main-container'>
                 <ContentHeader
                     contentTitle='Pick add-ons'
                     contentDescription='Add-ons help your gaming experince.'
@@ -106,13 +109,13 @@ const Step3 = () => {
                         )}
                     </div>
                 </Form>
-            </div>
+            </main>
 
             <div className='button-box'>
                 <Link className='go-back light-gray-text' to='/step2'>Go Back</Link>
                 <Link to='/step4' className='next__btn'>Next Step</Link>
             </div>
-        </main>
+        </div>
     )
 }
 
