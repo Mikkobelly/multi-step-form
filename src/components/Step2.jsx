@@ -162,7 +162,7 @@ const Step2 = () => {
             </main>
 
             <div className='button-box'>
-                <Link className='go-back light-gray-text' to='/step1'>Go Back</Link>
+                <Link className='go-back light-gray-text' to='/'>Go Back</Link>
                 <Link to='/step3' className='next__btn'>
                     Next Step
                 </Link>
