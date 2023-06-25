@@ -20,18 +20,18 @@ and deployed on [Netlify](https://www.netlify.com).
 
 ## App Showcase
 Desktop: 
-<img alt="A screenshot of step1 in a desktop view" src="/screenshots/msf_1.png" width="100%" style="margin-bottom:16px;">
-<img alt="A screenshot of step2 in a desktop view" src="/screenshots/msf_2-1.png" width="100%" style="margin-bottom:16px;">
-<img alt="Another screenshot of step2 in a desktop view" src="/screenshots/msf_2-2.png" width="100%" style="margin-bottom:16px;">
-<img alt="A screenshot of step3 in a desktop view" src="/screenshots/msf_3.png" width="100%" style="margin-bottom:16px;">
-<img alt="A screenshot of step4 in a desktop view" src="/screenshots/msf_4.png" width="100%" style="margin-bottom:16px;">
-<img alt="A screenshot of competion page in a desktop view" src="/screenshots/msf_5.png" width="100%" style="margin-bottom:16px;">
+<img alt="A screenshot of step1 in a desktop view" src="/screenshots/msf_1.png" width="100%">
+<img alt="A screenshot of step2 in a desktop view" src="/screenshots/msf_2-1.png" width="100%">
+<img alt="Another screenshot of step2 in a desktop view" src="/screenshots/msf_2-2.png" width="100%">
+<img alt="A screenshot of step3 in a desktop view" src="/screenshots/msf_3.png" width="100%">
+<img alt="A screenshot of step4 in a desktop view" src="/screenshots/msf_4.png" width="100%">
+<img alt="A screenshot of competion page in a desktop view" src="/screenshots/msf_5.png" width="100%">
 
 Mobile:
 <div width="100%">
-  <img alt="A screenshot of step1 in a mobile view" src="/screenshots/msf_1--mob.png" width="30%" style="display:inline-block; margin-right:16px;">
-  <img alt="A screenshot of step2 in a mobile view" src="/screenshots/msf_2--mob.png" width="30%" style="display:inline-block; margin-right:16px; margin-bottom:16px">
+  <img alt="A screenshot of step1 in a mobile view" src="/screenshots/msf_1--mob.png" width="30%" marginWidth="16">
+  <img alt="A screenshot of step2 in a mobile view" src="/screenshots/msf_2--mob.png" width="30%">
   <img alt="A screenshot of step3 in a mobile view" src="/screenshots/msf_3--mob.png" width="30%">
-  <img alt="A screenshot of step4 in a mobile view" src="/screenshots/msf_4--mob.png" width="30%" style="display:inline-block; margin-right:16px;">
+  <img alt="A screenshot of step4 in a mobile view" src="/screenshots/msf_4--mob.png" width="30%">
   <img alt="A screenshot of completion page in a mobile view" src="/screenshots/msf_5--mob.png" width="30%">
 </div>
