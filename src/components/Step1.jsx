@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
 import { Form, Button } from 'react-bootstrap';
+import Sidebar from './Sidebar';
 import ContentHeader from './ContentHeader';
 
 // These functions are defined globally so that they can be used in other component
@@ -133,8 +134,10 @@ const Step1 = () => {
 
 
     return (
-        <main className='content-container'>
-            <div className='flex-container'>
+        <div className='container'>
+            <Sidebar />
+
+            <main className='main-container'>
                 <ContentHeader
                     contentTitle='Personal Info'
                     contentDescription='Please provide your name, email address and phone number.'
@@ -187,14 +190,14 @@ const Step1 = () => {
                         />
                     </Form.Group>
                 </Form>
-            </div>
+            </main>
 
             <div className='button-box next__btn-box'>
                 <Button onClick={handleNextClick} className='next__btn'>
                     Next Step
                 </Button>
             </div>
-        </main>
+        </div>
     )
 }
 

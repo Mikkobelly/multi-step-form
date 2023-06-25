@@ -38,7 +38,7 @@ body {
 
 #root {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +70,12 @@ h1 {
   display: grid;
   grid-template-columns: 30% 70%;
   background-color: var(--white);
-  padding: 1%;
+  padding: 1.5%;
   margin: 2.5%;
 }
 
 .sidebar-container {
+  grid-row: 1 / span 2;
   background-image: url("images/bg-sidebar-desktop.svg");
   background-size: cover;
   color: var(--white);
@@ -92,7 +93,7 @@ h1 {
 .sidebar__num {
   color: var(--white);
   text-decoration: none;
-  padding: .8rem 1.2rem;
+  padding: .8rem 1.3rem;
   border: 1px solid var(--white);
   border-radius: 50%;
   margin-right: 2rem;
@@ -115,7 +116,6 @@ h1 {
   margin-bottom: 0;
 }
 
-.content-container,
 .form-container {
   display: flex;
   flex-direction: column;
@@ -126,12 +126,8 @@ h1 {
   height: 100%;
 }
 
-/* .form-container {
-  flex-grow: 1;
-} */
-
-.flex-container {
-  flex: 1;
+.main-container {
+  padding: 4% 14% 0;
 }
 
 .content__header {
@@ -190,6 +186,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 14%;
 }
 
 .button-box.next__btn-box {
@@ -223,6 +220,7 @@ h1 {
   border: 1px solid var(--strawberry-red);
 }
 
+
 /* ----- Step2 / PlanCard---- */
 .plancard-box {
   display: grid;
@@ -232,7 +230,7 @@ h1 {
 
 .card {
   border-radius: 1rem;
-  padding: 2rem 1.25rem;
+  padding: 1.5rem 1.25rem;
   transition: var(--transition);
 }
 
@@ -275,7 +273,8 @@ h1 {
 }
 
 #plan-switch {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 255%29'/%3e%3c/svg%3e");
+  background-image: 
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 255%29'/%3e%3c/svg%3e");
   background-color: var(--marine-blue);
   border-color: var(--marine-blue);
   box-shadow: none;
@@ -436,9 +435,14 @@ a.next__btn:active {
   color: var(--white);
 }
 
+
 /* ------ Complete page ----- */
 .thank-container {
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 4% 14%;
 }
 
 .thank__icon {
@@ -457,7 +461,9 @@ a.next__btn:active {
   color: var(--cool-gray);
 }
 
-/* 750px */
+
+/* ------ Media Queries ------- */
+/* <= 750px */
 @media all and (max-width: 46.875em) { 
 
   .sidebar__title {
@@ -470,6 +476,7 @@ a.next__btn:active {
 
 }
 
+/* <= 670px */
 @media all and (max-width: 41.875em) {
 
     h1 {
@@ -480,11 +487,10 @@ a.next__btn:active {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding: 3%;
+      padding: 0;
       margin: 0;
       background-color: var(--magnolia);
       border-radius: 0;
-      overflow: hidden;
     }
 
     .sidebar-container {
@@ -492,14 +498,14 @@ a.next__btn:active {
       background-size: cover;
       display: flex;
       justify-content: center;
-      transform: scale(1.2);
       height: 24vh;
+      border-radius: 0;
+      padding: 7rem 0 0;
     }
 
     .sidebar__content-box {
       justify-content: center;
       align-items: flex-start;
-      transform: scale(.8);
     }
 
     .sidebar__title,
@@ -508,20 +514,24 @@ a.next__btn:active {
     }
 
     .sidebar__num {
-      margin: 0 .4rem;
+      margin: 0 1rem;
     }
 
-    .content-container {
-      min-height: 50rem;
+    .main-container,
+    .thank-container {
+      min-height: 45rem;
       padding: 8% 5%;
-      transform: translateY(-16%);
+      transform: translateY(-8rem) scale(.95);
       background-color: var(--white);
       border-radius: 1.2rem;
     }
 
-    .button-box {
+    .button-box,
+    .summary {
       width: 100%;
       background-color: var(--white);
+      padding: 4%;
+      margin: auto 0 0;
     }
 
     /* Step2 */
@@ -536,5 +546,29 @@ a.next__btn:active {
 
     .plan__icon {
       margin-bottom: 0;
+    }
+
+    /* Complete */
+    .container.complete {
+      justify-content: flex-start;
+    }
+
+    .thank-container {
+      background-color: var(--white);
+    }
+}
+
+/* <= 670 x 750px */
+@media all and (max-width: 41.875em) and (max-height: 46.875em)  {
+    .sidebar-container {
+      padding: 5rem 0 0;
+    }
+}
+
+/* <= 670 x 700px */
+@media all and (max-width: 41.875em) and (max-height: 43.75em) {
+    .main-container,
+    .thank-container {
+      transform: translateY(-7rem) scale(.95);
     }
 }

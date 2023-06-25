@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
 import { validateName, validateEmail, validatePhone } from './Step1';
 import { Form, Button } from 'react-bootstrap';
+import Sidebar from './Sidebar';
 import ContentHeader from './ContentHeader';
 import SummaryCard from './SummaryCard';
 
@@ -21,7 +22,7 @@ const Step4 = () => {
         if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
             alert('Please provide personal info in Step 1. After filling the form, click "Next Step" to register your data.');
             // Redirect user to step1
-            navigate('/step1')
+            navigate('/')
             return;
         }
 
@@ -47,25 +48,25 @@ const Step4 = () => {
 
 
     return (
-        <div>
-            <main className='content-container'>
-                <div className='flex-container'>
-                    <ContentHeader
-                        contentTitle='Finishing up'
-                        contentDescription='Double-check everything looks OK before confirming.'
-                    />
-                    <SummaryCard />
-                </div>
+        <div className='container'>
+            <Sidebar />
 
-                <Form onSubmit={handleSubmit} className='summary'>
-                    <div className='button-box'>
-                        <Link className='go-back light-gray-text' to='/step3'>Go Back</Link>
-                        <Button type='submit' className='confirm__btn'>
-                            Confirm
-                        </Button>
-                    </div>
-                </Form>
-            </main>
+            <div className='main-container'>
+                <ContentHeader
+                    contentTitle='Finishing up'
+                    contentDescription='Double-check everything looks OK before confirming.'
+                />
+                <SummaryCard />
+            </div>
+
+            <Form onSubmit={handleSubmit} className='summary'>
+                <div className='button-box'>
+                    <Link className='go-back light-gray-text' to='/step3'>Go Back</Link>
+                    <Button type='submit' className='confirm__btn'>
+                        Confirm
+                    </Button>
+                </div>
+            </Form>
         </div>
     )
 }

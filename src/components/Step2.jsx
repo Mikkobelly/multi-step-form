@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
 import { Form } from 'react-bootstrap';
+import Sidebar from './Sidebar';
 import ContentHeader from './ContentHeader';
 import PlanCard from './PlanCard';
 import arcadeIcon from '../images/icon-arcade.svg';
@@ -111,8 +112,10 @@ const Step2 = () => {
 
 
     return (
-        <main className='content-container'>
-            <div className='flex-container'>
+        <div className='container'>
+            <Sidebar />
+
+            <main className='main-container'>
                 <ContentHeader
                     contentTitle='Select Your Plan'
                     contentDescription='You have the option of monthly or yearly billing.'
@@ -156,7 +159,7 @@ const Step2 = () => {
                         </label>
                     </div>
                 </Form>
-            </div>
+            </main>
 
             <div className='button-box'>
                 <Link className='go-back light-gray-text' to='/step1'>Go Back</Link>
@@ -164,7 +167,7 @@ const Step2 = () => {
                     Next Step
                 </Link>
             </div>
-        </main>
+        </div>
     )
 }
 
