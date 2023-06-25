@@ -29,7 +29,7 @@ Desktop:
 
 Mobile:
 <div width="100%">
-  <img alt="A screenshot of step1 in a mobile view" src="/screenshots/msf_1--mob.png" width="30%" marginWidth="16">
+  <img alt="A screenshot of step1 in a mobile view" src="/screenshots/msf_1--mob.png" width="30%">
   <img alt="A screenshot of step2 in a mobile view" src="/screenshots/msf_2--mob.png" width="30%">
   <img alt="A screenshot of step3 in a mobile view" src="/screenshots/msf_3--mob.png" width="30%">
   <img alt="A screenshot of step4 in a mobile view" src="/screenshots/msf_4--mob.png" width="30%">
