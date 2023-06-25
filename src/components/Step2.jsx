@@ -140,7 +140,7 @@ const Step2 = () => {
                         <label
                             htmlFor='plan-switch'
                             className='switch__label switch__label--mo'
-                            style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
+                            style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
                         >
                             Monthly
                         </label>
@@ -153,7 +153,7 @@ const Step2 = () => {
                         <label
                             htmlFor='plan-switch'
                             className='switch__label switch__label--yr'
-                            style={plan.paymentPlan === 'yearly' ? switchLabelStyle : null}
+                            style={plan.paymentPlan === 'monthly' ? switchLabelStyle : null}
                         >
                             Yearly
                         </label>
