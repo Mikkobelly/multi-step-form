@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
 import { Form, Button } from 'react-bootstrap';
@@ -97,37 +97,39 @@ const validatePhone = (val) => {
 
 const Step1 = () => {
     const { userData, setUserData } = useContext(AppContext);
-    const [input, setInput] = useState({
-        name: userData.userInfo.name,
-        email: userData.userInfo.email,
-        phone: userData.userInfo.phone
-    });
+    const { name, email, phone } = userData.userInfo;
+    const nameRef = useRef(null)
+    const emailRef = useRef(null)
+    const phoneRef = useRef(null)
 
     const navigate = useNavigate();
 
-
-    // Update the input state when user interacts
+    // Run real time validation for according input field
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setInput((prevValue) => {
-            return { ...prevValue, [name]: value }
-        })
         name === 'name' && validateName(value);
         name === 'email' && validateEmail(value);
         name === 'phone' && validatePhone(value);
-    };
+    }
 
     // Run when user press 'Next step' button and updates userData state
     const handleNextClick = () => {
-        validateName(input.name);
-        validateEmail(input.email);
-        validatePhone(input.phone);
-        if (!validateName(input.name) || !validateEmail(input.email) || !validatePhone(input.phone)) {
+        const isNameValid = validateName(nameRef.current.value);
+        const isEmailValid = validateEmail(emailRef.current.value);
+        const isPhoneValid = validatePhone(phoneRef.current.value);
+        if (!isNameValid || !isEmailValid || !isPhoneValid) {
             alert('Please make change(s) to your input.')
             return;
         }
         setUserData((prev) => {
-            return { ...prev, userInfo: { ...input } }
+            return {
+                ...prev,
+                userInfo: {
+                    name: nameRef.current.value,
+                    email: emailRef.current.value,
+                    phone: phoneRef.current.value
+                }
+            }
         })
         navigate('/step2')
     };
@@ -151,9 +153,10 @@ const Step1 = () => {
                         </div>
                         <Form.Control
                             className='input--name'
-                            onChange={handleChange}
                             name='name'
-                            value={input.name}
+                            ref={nameRef}
+                            defaultValue={name}
+                            onChange={handleChange}
                             type='text'
                             placeholder='e.g.Stephen King'
                             required
@@ -166,9 +169,10 @@ const Step1 = () => {
                         </div>
                         <Form.Control
                             className='input--email'
-                            onChange={handleChange}
                             name='email'
-                            value={input.email}
+                            ref={emailRef}
+                            defaultValue={email}
+                            onChange={handleChange}
                             type='email'
                             placeholder='e.g.stephenking@lorem.com'
                             required
@@ -181,9 +185,10 @@ const Step1 = () => {
                         </div>
                         <Form.Control
                             className='input--phone'
-                            onChange={handleChange}
                             name='phone'
-                            value={input.phone}
+                            ref={phoneRef}
+                            defaultValue={phone}
+                            onChange={handleChange}
                             type='phone'
                             placeholder='e.g. +1 234 567 890'
                             required
